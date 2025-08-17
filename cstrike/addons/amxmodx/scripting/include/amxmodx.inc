@@ -243,10 +243,12 @@ forward client_putinserver(id);
  * @param plugin_name   Name of the plugin
  * @param version       Version of the plugin
  * @param author        Author of the plugin
+ * @param url           URL of the plugin
+ * @param description   Description of the plugin
  *
  * @return              Plugin id of the calling plugin
  */
-native register_plugin(const plugin_name[], const version[], const author[]);
+native register_plugin(const plugin_name[], const version[], const author[], const url[] = "", const description[] = "");
 
 /**
  * Precaches a model file.
@@ -679,10 +681,12 @@ native disable_logevent(handle);
  * @param fadeintime    Time it takes the message to fully appear (fade-in)
  * @param fadeouttime   Time it takes the message to fully disappear (fade-out)
  * @param channel       Channel to use on the client
- *
+ * @param alpha1        Alpha component of hudmessage color
+ * @param color2[4]     Color 2 array {r,g,b,a}
+ * 
  * @noreturn
  */
-native set_hudmessage(red = 200, green = 100, blue = 0, Float:x = -1.0, Float:y = 0.35, effects = 0, Float:fxtime = 6.0, Float:holdtime = 12.0, Float:fadeintime = 0.1, Float:fadeouttime = 0.2, channel = -1);
+native set_hudmessage(red = 200, green = 100, blue = 0, Float:x = -1.0, Float:y = 0.35, effects = 0, Float:fxtime = 6.0, Float:holdtime = 12.0, Float:fadeintime = 0.1, Float:fadeouttime = 0.2, channel = -1, alpha1 = 0, color2[4] = {255, 255, 250, 0});
 
 /**
  * Displays a message on the client HUD.
@@ -920,6 +924,19 @@ native is_user_bot(index);
  * @return          1 if client is a HLTV proxy, 0 otherwise
  */
 native is_user_hltv(index);
+
+/**
+ * Returns if the client is authorized.
+ *
+ * @note This does not throw an error if the provided index is out of the
+ *       1 to MaxClients range. That means you can safely use this native
+ *       without manually verifying that the index is a valid client index.
+ *
+ * @param index     Client index
+ *
+ * @return          1 if client is authorized, 0 otherwise
+ */
+native is_user_authorized(index);
 
 /**
  * Returns if the client is connected.
@@ -1747,6 +1764,13 @@ native parse_time(const input[], const format[], time = -1);
  * @note Please consider using set_task_ex() instead which allows you to
  *       use named constants for flags instead of letters.
  *
+ * @note The function is called in the following manner if data is passed:
+ *   data[]          - Data passed
+ *   id              - Task index
+ *
+ * @note The function is called in the following manner if no data is passed:
+ *   id              - Task index
+ *
  * @param time          Time interval to assign
  * @param function      Function to execute
  * @param id            Task id to assign
@@ -1827,7 +1851,7 @@ native set_user_flags(index, flags = -1, id = 0);
  *       0 is actively used. You should not change the value of the second
  *       parameter from the default.
  *
- * @param index     Client index, 0 to set flags of server
+ * @param index     Client index, 0 to get flags of server
  * @param id        Flag set id, ranging from 0 to 31
  *
  * @return          Bitflag sum of client's admin flags
@@ -2316,12 +2340,15 @@ native is_plugin_loaded(const name[], bool:usefilename = false);
  * @param len4      Maximum author buffer size
  * @param status    Buffer to copy plugin status flags to
  * @param len5      Maximum status buffer size
- * @param ...       Unused and ignored
+ * @param url       Buffer to copy plugin url to
+ * @param len6      Maximum url buffer size
+ * @param desc      Buffer to copy plugin description to
+ * @param len7      Maximum description buffer size
  *
  * @return          Plugin index on success, -1 if there is no plugin with given
  *                  index
  */
-native get_plugin(index, filename[] = "", len1 = 0, name[] = "", len2 = 0, version[] = "", len3 = 0, author[] = "", len4 = 0, status[] = "", len5 = 0, ...);
+native get_plugin(index, filename[] = "", len1 = 0, name[] = "", len2 = 0, version[] = "", len3 = 0, author[] = "", len4 = 0, status[] = "", len5 = 0, url[] = "", len6 = 0, desc[] = "", len7 = 0);
 
 /**
  * Returns the number of loaded AMXX plugins.

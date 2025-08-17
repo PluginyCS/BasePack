@@ -99,15 +99,15 @@ SAVE_LOC = Zapazi mestopolojenieto
 [ro]
 ADMIN_TELEPORT_1 = ADMIN: teleportare %s
 ADMIN_TELEPORT_2 = ADMIN %s: teleportare %s
-TELE_MENU = Menu Teleportare
-CUR_LOC = Locatia Actuala
-SAVE_LOC = Salveaza Locatie
+TELE_MENU = Meniu teleportare
+CUR_LOC = Locația actuală
+SAVE_LOC = Salvează locație
 
 [hu]
-ADMIN_TELEPORT_1 = ADMIN: %s teleport
-ADMIN_TELEPORT_2 = ADMIN %s: %s teleport
-TELE_MENU = Teleport Menu
-CUR_LOC = Mostani hely
+ADMIN_TELEPORT_1 = ADMIN: %s teleportálva
+ADMIN_TELEPORT_2 = ADMIN %s: %s teleportálva
+TELE_MENU = Teleport Menü
+CUR_LOC = Jelenlegi hely
 SAVE_LOC = Hely mentése
 
 [lt]
