@@ -30,6 +30,11 @@
 #define MAX_STRING_LENGTH 16384
 
 /**
+ * The maximum buffer size required to store a map's name.
+ */
+#define MAX_MAPNAME_LENGTH 64
+
+/**
  * Defines and constants related to the maximum number of clients.
  *
  * @note  MAX_PLAYERS is not the same as MaxClients. MAX_PLAYERS is a hardcoded
@@ -43,6 +48,11 @@
  * Maximum number of players the server supports 
  */
 public stock const MaxClients; 
+
+/**
+ * Current map name
+ */
+public stock const MapName[MAX_MAPNAME_LENGTH];
 
 /**
  * Pass this into certain functions to act as a C++ NULL 
@@ -341,6 +351,7 @@ enum
 	kRenderFxExplode,           /* Scale up really big! */
 	kRenderFxGlowShell,         /* Glowing Shell */
 	kRenderFxClampMinScale,     /* Keep this sprite from getting very small (SPRITES only!) */
+	kRenderFxLightMultiplier,   /* CTM !!!CZERO added to tell the studiorender that the value in iuser2 is a lightmultiplier */
 };
 
 /**
