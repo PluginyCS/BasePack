@@ -81,7 +81,8 @@ enum members_tables_e
 	mt_csplayerweapon,
 	mt_gib,
 	mt_netadr,
-	mt_csentity
+	mt_csentity,
+	mt_netchan
 };
 
 #define ReAPIFunc 				{EngineFunc, GamedllFunc, GamedllFunc_CBaseAnimating, GamedllFunc_CBasePlayer, GamedllFunc_CSGameRules, GamedllFunc_CGrenade, GamedllFunc_CWeaponBox, ReCheckerFunc, GamedllFunc_CBasePlayerWeapon, GamedllFunc_CGib, GamedllFunc_CBaseEntity, GamedllFunc_CBotManager}
@@ -119,8 +120,11 @@ enum
 {
 	HC_CONTINUE = 0, // Plugin didn't take any action
 	HC_SUPERCEDE,    // Skip real function, use my return value
-	HC_BREAK         // Skip all forwards and real function, use my return value
+	HC_BREAK,        // Skip all forwards and real function, use my return value
                      // @note Warning: Be very careful, using this type of return will skip calls for all following AMXX plugins
+
+	HC_BYPASS        // Skip calls for all following AMXX plugins, but call the original function
+                     // @note Warning: In PRE skips all forwards including POST forwards
 };
 
 /**

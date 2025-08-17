@@ -13,7 +13,16 @@ enum MapNameType
 	MNT_SET     // return the name of the current map
 };
 
-/*
+/**
+* For native CheckVisibilityInOrigin
+*/
+enum CheckVisibilityType
+{
+	VisibilityInPVS = 0, // Check in Potentially Visible Set (PVS)
+	VisibilityInPAS      // Check in Potentially Audible Set (PAS)
+};
+
+/**
 * For RH_SV_AddResource hook
 */
 enum ResourceType_t
@@ -91,9 +100,10 @@ enum EngineFunc
 
 	/*
 	* Description:  Called when client it's in the scoreboard
-	* Params:       (const this)
+	* Params:       (const client)
 	*/
 	RH_SV_EmitPings,
+
 	/*
 	* Description:  Called when an entity is created.
 	* Return type:  Edict * (Entity index)
@@ -163,17 +173,23 @@ enum EngineFunc
 	RH_SV_ClientPrintf,
 
 	/*
+	* Description:  Called before adding an entity to the physents of a player.
+	* Return type:  bool
+	* Params:       (const entity, const client)
+	*/
+	RH_SV_AllowPhysent,
+
+	/*
 	* Description:  Called when a command is being sent to server.
 	* Params:       (const cmd[], source, id)
 	*/
 	RH_ExecuteServerStringCmd,
 
 	/*
-	* Description:  Called before adding an entity to the physents of a player.
-	* Return type:  bool
-	* Params:       (const entity, const client)
+	* Description:  Called when server sends resources list and location.
+	* Params:       (const client)
 	*/
-	RH_SV_AllowPhysent,
+	RH_SV_SendResources,
 
 };
 
@@ -1175,96 +1191,96 @@ enum UCmd
 	/*
 	* Description:      -
 	* Member type:      short
-	* Get params:       get_ucmd(const ucmd, UserCmd:var);
-	* Set params:       set_ucmd(const ucmd, UserCmd:var, value);
+	* Get params:       get_ucmd(const ucmd, UCmd:var);
+	* Set params:       set_ucmd(const ucmd, UCmd:var, value);
 	*/
 	ucmd_lerp_msec = BEGIN_MEMBER_REGION(usercmd),
 
 	/*
 	* Description:      -
 	* Member type:      byte
-	* Get params:       get_ucmd(const ucmd, UserCmd:var);
-	* Set params:       set_ucmd(const ucmd, UserCmd:var, value);
+	* Get params:       get_ucmd(const ucmd, UCmd:var);
+	* Set params:       set_ucmd(const ucmd, UCmd:var, value);
 	*/
 	ucmd_msec,
 
 	/*
 	* Description:      -
 	* Member type:      vec3_t
-	* Get params:       get_ucmd(const ucmd, UserCmd:var, Float:output[3]);
-	* Set params:       set_ucmd(const ucmd, UserCmd:var, Float:dest[3]);
+	* Get params:       get_ucmd(const ucmd, UCmd:var, Float:output[3]);
+	* Set params:       set_ucmd(const ucmd, UCmd:var, Float:dest[3]);
 	*/
 	ucmd_viewangles,
 
 	/*
 	* Description:      -
 	* Member type:      float
-	* Get params:       Float:get_ucmd(const ucmd, UserCmd:var);
-	* Set params:       set_ucmd(const ucmd, UserCmd:var, Float:value);
+	* Get params:       Float:get_ucmd(const ucmd, UCmd:var);
+	* Set params:       set_ucmd(const ucmd, UCmd:var, Float:value);
 	*/
 	ucmd_forwardmove,
 
 	/*
 	* Description:      -
 	* Member type:      float
-	* Get params:       Float:get_ucmd(const ucmd, UserCmd:var);
-	* Set params:       set_ucmd(const ucmd, UserCmd:var, Float:value);
+	* Get params:       Float:get_ucmd(const ucmd, UCmd:var);
+	* Set params:       set_ucmd(const ucmd, UCmd:var, Float:value);
 	*/
 	ucmd_sidemove,
 
 	/*
 	* Description:      -
 	* Member type:      float
-	* Get params:       Float:get_ucmd(const ucmd, UserCmd:var);
-	* Set params:       set_ucmd(const ucmd, UserCmd:var, Float:value);
+	* Get params:       Float:get_ucmd(const ucmd, UCmd:var);
+	* Set params:       set_ucmd(const ucmd, UCmd:var, Float:value);
 	*/
 	ucmd_upmove,
 
 	/*
 	* Description:      -
 	* Member type:      byte
-	* Get params:       get_ucmd(const ucmd, UserCmd:var);
-	* Set params:       set_ucmd(const ucmd, UserCmd:var, value);
+	* Get params:       get_ucmd(const ucmd, UCmd:var);
+	* Set params:       set_ucmd(const ucmd, UCmd:var, value);
 	*/
 	ucmd_lightlevel,
 
 	/*
 	* Description:      -
 	* Member type:      unsigned short
-	* Get params:       get_ucmd(const ucmd, UserCmd:var);
-	* Set params:       set_ucmd(const ucmd, UserCmd:var, value);
+	* Get params:       get_ucmd(const ucmd, UCmd:var);
+	* Set params:       set_ucmd(const ucmd, UCmd:var, value);
 	*/
 	ucmd_buttons,
 
 	/*
 	* Description:      -
 	* Member type:      byte
-	* Get params:       get_ucmd(const ucmd, UserCmd:var);
-	* Set params:       set_ucmd(const ucmd, UserCmd:var, value);
+	* Get params:       get_ucmd(const ucmd, UCmd:var);
+	* Set params:       set_ucmd(const ucmd, UCmd:var, value);
 	*/
 	ucmd_impulse,
 
 	/*
 	* Description:      -
 	* Member type:      byte
-	* Get params:       get_ucmd(const ucmd, UserCmd:var);
-	* Set params:       set_ucmd(const ucmd, UserCmd:var, value);
+	* Get params:       get_ucmd(const ucmd, UCmd:var);
+	* Set params:       set_ucmd(const ucmd, UCmd:var, value);
 	*/
 	ucmd_weaponselect,
 
 	/*
 	* Description:      -
 	* Member type:      int
-	* Get params:       get_ucmd(const ucmd, UserCmd:var);
-	* Set params:       set_ucmd(const ucmd, UserCmd:var, value);
+	* Get params:       get_ucmd(const ucmd, UCmd:var);
+	* Set params:       set_ucmd(const ucmd, UCmd:var, value);
 	*/
 	ucmd_impact_index,
 
 	/*
 	* Description:      -
 	* Member type:      vec3_t
-	* Get params:       get_ucmd(const ucmd, UserCmd:var, Float:output[3]);
-	* Set params:       set_ucmd(const ucmd, UserCmd:var, Float:dest[3]);
+	* Get params:       get_ucmd(const ucmd, UCmd:var, Float:output[3]);
+	* Set params:       set_ucmd(const ucmd, UCmd:var, Float:dest[3]);
 	*/
 	ucmd_impact_position
 };
@@ -1304,4 +1320,219 @@ enum NetAdrVars
 	* Set params:       set_netadr(const NetAdr:adr, const NetAdrVars:var, const value);
 	*/
 	netadr_port
+};
+
+/**
+* enum NetSrc
+*/
+enum NetSrc
+{
+	NS_CLIENT,
+	NS_SERVER,
+	NS_MULTICAST	// xxxMO
+};
+
+/**
+* enum NetChan
+*/
+enum NetChan
+{
+	/*
+	* Description:      NS_SERVER or NS_CLIENT, depending on channel
+	* Member type:      int
+	* Get params:       NetSrc:get_netchan(const index, NetChan:var);
+	* Set params:       set_netchan(const index, NetChan:var, NetSrc:value);
+	*/
+	net_sock = BEGIN_MEMBER_REGION(netchan),
+
+	/*
+	* Description:      Address this channel is talking to
+	* Member type:      NetAdr
+	* Get params:       NetAdr:get_netchan(const index, NetChan:var);
+	* Set params:       set_netchan(const index, NetChan:var, NetAdr:value);
+	*/
+	net_remote_address,
+
+	/*
+	* Description:      -
+	* Member type:      int
+	* Get params:       get_netchan(const index, NetChan:var);
+	* Set params:       set_netchan(const index, NetChan:var, value);
+	*/
+	net_player_slot,
+
+	/*
+	* Description:      For timeouts. Time last message was received
+	* Member type:      float
+	* Get params:       Float:get_netchan(const index, NetChan:var);
+	* Set params:       set_netchan(const index, NetChan:var, Float:value);
+	*/
+	net_last_received,
+
+	/*
+	* Description:      Time when channel was connected
+	* Member type:      float
+	* Get params:       Float:get_netchan(const index, NetChan:var);
+	* Set params:       set_netchan(const index, NetChan:var, Float:value);
+	*/
+	net_connect_time,
+
+	/*
+	* Description:      Bandwidth choke. (Bytes per second)
+	* Member type:      float
+	* Get params:       Float:get_netchan(const index, NetChan:var);
+	* Set params:       set_netchan(const index, NetChan:var, Float:value);
+	*/
+	net_rate,
+
+	/*
+	* Description:      If rh_get_realtime() > cleartime, free to send next packet.
+	* Member type:      float
+	* Get params:       Float:get_netchan(const index, NetChan:var);
+	* Set params:       set_netchan(const index, NetChan:var, Float:value);
+	*/
+	net_cleartime,
+
+	/*
+	* Description:      A sequence number that increases with each incoming bunch of packets.
+	* Member type:      int
+	* Get params:       get_netchan(const index, NetChan:var);
+	* Set params:       set_netchan(const index, NetChan:var, value);
+	*/
+	net_incoming_sequence,
+
+	/*
+	* Description:      The number of last outgoing message that has been ack'd.
+	* Member type:      int
+	* Get params:       get_netchan(const index, NetChan:var);
+	* Set params:       set_netchan(const index, NetChan:var, value);
+	*/
+	net_incoming_acknowledged,
+
+	/*
+	* Description:      Single bit indicating the state of acknowledgment for the last reliable message.
+	* Member type:      int
+	* Get params:       get_netchan(const index, NetChan:var);
+	* Set params:       set_netchan(const index, NetChan:var, value);
+	*/
+	net_incoming_reliable_acknowledged,
+
+	/*
+	* Description:      Single bit, maintained local that toggles between 0 and 1 to track the sequence of reliable messages received
+	* Member type:      int
+	* Get params:       get_netchan(const index, NetChan:var);
+	* Set params:       set_netchan(const index, NetChan:var, value);
+	*/
+	net_incoming_reliable_sequence,
+
+	/*
+	* Description:      Message we are sending to remote
+	* Member type:      int
+	* Get params:       get_netchan(const index, NetChan:var);
+	* Set params:       set_netchan(const index, NetChan:var, value);
+	*/
+	net_outgoing_sequence,
+
+	/*
+	* Description:      Whether the message contains reliable payload, single bit
+	* Member type:      int
+	* Get params:       get_netchan(const index, NetChan:var);
+	* Set params:       set_netchan(const index, NetChan:var, value);
+	*/
+	net_reliable_sequence,
+
+	/*
+	* Description:      Outgoing sequence number of last send that had reliable data
+	* Member type:      int
+	* Get params:       get_netchan(const index, NetChan:var);
+	* Set params:       set_netchan(const index, NetChan:var, value);
+	*/
+	net_last_reliable_sequence
+};
+
+/**
+* Message argument types used with GetMessageArgType()
+*/
+enum MsgArgType
+{
+	ArgByte,
+	ArgChar,
+	ArgShort,
+	ArgLong,
+	ArgAngle,
+	ArgCoord,
+	ArgString,
+	ArgEntity,
+};
+
+/**
+* Message data types used with SetMessageData()/GetMessageData()
+*                              HasModifiedMessageData()/ResetModifiedMessageData()
+*/
+enum MsgDataType
+{
+	/*
+	* Description:      Any part of the message
+	*/
+	MsgAny,
+
+	/*
+	* Description:      The destination of the message
+	* Arg type:         integer
+	* Get params:       new dest = GetMessageData(MsgDest);
+	* Set params:       SetMessageData(MsgDest, MSG_ALL);
+	*/
+	MsgDest,
+
+	/*
+	* Description:      The index of the message
+	* Arg type:         integer
+	* Get params:       new msg_id = GetMessageData(MsgMsgId);
+	* Set params:       SetMessageData(MsgMsgId, const msg_id);
+	*/
+	MsgMsgId,
+
+	/*
+	* Description:      The origin of the message
+	* Arg type:         float [3]
+	* Get params:       GetMessageData(MsgOrigin, Float:dstVector[3]);
+	* Set params:       SetMessageData(MsgOrigin, Float:srcVector[3]);
+	*/
+	MsgOrigin,
+
+	/*
+	* Description:      The index of the recipient client
+	* Arg type:         integer
+	* Get params:       new targetId = GetMessageData(MsgTargetId);
+	* Set params:       SetMessageData(MsgTargetId, const targetId); (acceptable indexes 0-32, 0 index also as -1 means NULLENT)
+	*/
+	MsgTargetId,
+
+	/*
+	* Description:      The arguments of the message
+	*
+	* Arg type:         string (ArgString)
+	* Get params:       bool:GetMessageData(MsgArg, const argnumber, value[], const maxlen);
+	* Set params:       bool:SetMessageData(MsgArg, const argnumber, const value[]);
+	*
+	* Arg type:         float (ArgAngle, ArgCoord)
+	* Get params:       Float:GetMessageData(MsgArg, const argnumber, &Float:value = 0.0);
+	* Set params:       bool:SetMessageData(MsgArg, const argnumber, const Float:value);
+	*
+	* Arg type:         integer (ArgByte, ArgChar, ArgShort, ArgLong, ArgEntity)
+	* Get params:       GetMessageData(MsgArg, const argnumber);
+	* Set params:       bool:SetMessageData(MsgArg, const argnumber, const value);
+	*/
+	MsgArg
+};
+
+/**
+* Blocking behavior types for messages
+* Flags for natives SetMessageBlock()/GetMessageBlock()
+*/
+enum MsgBlockType
+{
+	MSG_BLOCK_NOT,  // Not a block
+	MSG_BLOCK_ONCE, // Block once
+	MSG_BLOCK_SET   // Set block
 };
