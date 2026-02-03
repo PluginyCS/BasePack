@@ -29,7 +29,7 @@ This package is intended for Linux-based servers.
 2. Upload the package contents to your server (replace existing files if you know what you are doing).
 3. Configure `reunion.cfg` (see note below), then restart the server.
 
-> **Note:** You should set a 32-character SteamIdHashSalt in `reunion.cfg` (recommended hex string).
+> **Note:** You should set a 32-character SteamIdHashSalt in `reunion.cfg` (recommended hex string). You can generate a random salt using our online tool at **[hash.pluginycs.pl](https://hash.pluginycs.pl)**
 
 <details>
 <summary>Example: SteamIdHashSalt</summary>
@@ -39,6 +39,9 @@ Add the following line to `reunion.cfg`:
 ```ini
 SteamIdHashSalt = 9f3a2b7c1d4e5f6081a2b3c4d5e6f701
 ```
+
+</details>
+
 
 Save and restart the server. The warning about a missing or too-short SteamIdHashSalt should disappear.
 </details>
