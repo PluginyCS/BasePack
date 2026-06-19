@@ -29,7 +29,7 @@ This package is intended for Linux-based servers.
 2. Upload the package contents to your server (replace existing files if you know what you are doing).
 3. Configure `reunion.cfg` (see note below), then restart the server.
 
-> **Note:** You should set a 32-character SteamIdHashSalt in `reunion.cfg` (recommended hex string). You can generate a random salt using our online tool at **[hash.pluginycs.pl](https://hash.pluginycs.pl)**
+> **Note:** You should set `SteamIdHashSalt`. You can generate a random salt using our online tool at **[hash.pluginycs.pl](https://hash.pluginycs.pl)**
 
 <details>
 <summary>Example: SteamIdHashSalt</summary>
@@ -37,14 +37,13 @@ This package is intended for Linux-based servers.
 Add the following line to `reunion.cfg`:
 
 ```ini
-SteamIdHashSalt = 9f3a2b7c1d4e5f6081a2b3c4d5e6f701
+SteamIdHashSalt = 9f3a2b7c1d4e5f6081a2b3c4d5e6f7012a4c6e8f0b1d3f5a7c9e2d4f6a8b0c2d
 ```
 
 </details>
 
 
 Save and restart the server. The warning about a missing or too-short SteamIdHashSalt should disappear.
-</details>
 
 ## Modules
 
@@ -54,7 +53,7 @@ Save and restart the server. The warning about a missing or too-short SteamIdHas
 | 💣 [Metamod-r](https://github.com/rehlds/Metamod-R)                                 | ReHLDS                 | 1.3.0.149      |
 | 📈 [ReHLDS](https://github.com/rehlds/ReHLDS)                                       | ReHLDS                 | 3.14.0.857     |
 | ⚙️ [ReAPI](https://github.com/rehlds/ReAPI)                                         | ReHLDS                 | 5.26.0.338     |
-| 💡 [ReGameDLL](https://github.com/rehlds/ReGameDLL_CS)                              | ReHLDS                 | 5.28.0.756     |
+| 💡 [ReGameDLL](https://github.com/rehlds/ReGameDLL_CS)                              | ReHLDS                 | 5.30.0.814     |
 | 🔐 [Reunion](https://github.com/rehlds/ReUnion)                                     | ReHLDS                 | 0.2.0.25       |
 | 🔊 [ReVoice Plus](https://github.com/Garey27/revoice-plus)                          | Garey27                | 2.1.0          |
 
