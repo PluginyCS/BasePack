@@ -51,7 +51,7 @@ Save and restart the server. The warning about a missing or too-short SteamIdHas
 |:------------------------------------------------------------------------------------|:-----------------------|:--------------:|
 | 🔧 [AMX Mod X](https://www.amxmodx.org/amxxdrop/1.10/)                              | AMXX Dev Team          | 1.10.0.5468    |
 | 💣 [Metamod-r](https://github.com/rehlds/Metamod-R)                                 | ReHLDS                 | 1.3.0.149      |
-| 📈 [ReHLDS](https://github.com/rehlds/ReHLDS)                                       | ReHLDS                 | 3.14.0.857     |
+| 📈 [ReHLDS](https://github.com/rehlds/ReHLDS)                                       | ReHLDS                 | 3.15.0.896     |
 | ⚙️ [ReAPI](https://github.com/rehlds/ReAPI)                                         | ReHLDS                 | 5.29.0.358     |
 | 💡 [ReGameDLL](https://github.com/rehlds/ReGameDLL_CS)                              | ReHLDS                 | 5.30.0.814     |
 | 🔐 [Reunion](https://github.com/rehlds/ReUnion)                                     | ReHLDS                 | 0.2.0.25       |
