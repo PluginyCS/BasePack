@@ -94,3 +94,4 @@ Optional: enable any optional modules by adding them to `cstrike/addons/metamod/
 - theAsmodai
 - Garey27
 - ReHLDS Team
+- blendereqq
